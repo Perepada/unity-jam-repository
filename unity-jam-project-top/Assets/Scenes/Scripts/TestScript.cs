@@ -8,5 +8,6 @@ public class TestScript : MonoBehaviour
     void Start()
     {
         Debug.Log("Valera loh");
+        Debug.Log("I Durak");
     }
 }
