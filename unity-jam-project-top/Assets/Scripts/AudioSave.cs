@@ -6,24 +6,35 @@ using UnityEngine.UI;
 public class AudioSave : MonoBehaviour
 {
     public Slider soundSlider;
-    void Awake()
+    public AudioSource audio;
+    public float volume;
+
+    void Start()
     {
-        if (!PlayerPrefs.HasKey("soundValue"))
-        {
-            PlayerPrefs.SetFloat("soundValue", 1);
-            PlayerPrefs.Save();
-        }
-        soundSlider.value = PlayerPrefs.GetFloat("soundValue");
+        Load();
+        ValueMusic();
     }
-    void Update()
+    
+    public void SliderMusic()
     {
-        soundSlider.onValueChanged.AddListener(delegate { SafeValue(); });
+        volume = soundSlider.value;
+        Save();
+        ValueMusic();
     }
 
-    public void SafeValue()
+    void ValueMusic()
     {
-        PlayerPrefs.SetFloat("soundValue", soundSlider.value);
-        PlayerPrefs.Save();
-        Debug.Log("Saved");
+        audio.volume = volume;
+        soundSlider.value = volume;
+    }
+
+    void Save()
+    {
+        PlayerPrefs.SetFloat("volume", volume);
+    }
+
+    void Load()
+    {
+        volume = PlayerPrefs.GetFloat("volume", volume);
     }
 }
